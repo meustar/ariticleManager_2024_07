@@ -19,7 +19,6 @@ public class Main {
 
         int lastArticleId = 3;
 
-
         while (true) {
             System.out.print("명령어) ");
             String cmd = sc.nextLine().trim();
@@ -70,6 +69,14 @@ public class Main {
                         } else {
                             System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
                         }
+                    }
+                }
+            } else if (cmd.equals("article list 제")) {
+                System.out.println("==선택 글 보기==");
+                for (int i = articles.size() - 1; i >= 0; i--) {
+                    Article article = articles.get(i);
+                    if (article.getTitle().startsWith("제") == true) {
+                        System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate(), article.getTitle(), article.getBody());
                     }
                 }
 
