@@ -13,18 +13,4 @@ public class Util {
         String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return formatedNow;
     }
-
-    public static void init() {
-
-        sc = new Scanner(System.in);
-
-    }
-
-    public static void close() {
-        sc.close();
-    }
-
-    public static Scanner getScanner() {
-        return sc;
-    }
 }
