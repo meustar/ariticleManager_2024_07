@@ -17,6 +17,22 @@ public class Main {
 
         makeTestData();
 
+        System.out.println("1. 로그인");
+        System.out.println("2. 회원가입");
+
+        if (sc.nextLine() == "1") {
+            System.out.println("===== 로그인 ======");
+            System.out.print("ID : ");
+
+            System.out.print("PW : ");
+        } else if (sc.nextLine() == "2") {
+            System.out.println("====== 회원가입 ======");
+            System.out.print("ID : ");
+            System.out.print("PW : ");
+        }
+
+
+
         int lastArticleId = 3;
 
         while (true) {
