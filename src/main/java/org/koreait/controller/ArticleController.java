@@ -47,6 +47,10 @@ public class ArticleController extends Controller {
 
 
     private void doWrite() {
+//        if (!isLogined()){
+//            System.out.println("로그인이 필요합니다.");
+//            return;
+//        }                             // 선생님 힌트.
 
         System.out.println("==게시글 작성==");
         int id = lastArticleId + 1;

@@ -7,4 +7,8 @@ public abstract class Controller {
 //    {
 //      2024_07_03 . 5교시 11강 영상 꼭 참고.
 //    }
+
+
+    // 마지막 7교시 힌트....
+//    public abstract void isLogined();
 }
