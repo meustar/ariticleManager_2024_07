@@ -507,5 +507,5 @@ public class Main {
 1. 회원가입
    - Member(id, regDate, LoginId, LoginPw, name)
 2. 회원 테스트데이터 3명 생성
-3. 로그인
-4. 로그아웃
+3. 로그인 --> member login
+4. 로그아웃 --> member logout

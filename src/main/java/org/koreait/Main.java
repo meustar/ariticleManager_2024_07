@@ -16,7 +16,8 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.println("==프로그램 시작==");
 
-        makeTestData();
+        articleMakeTestData();
+        memberMakeTestData();
 
         int lastArticleId = 3;
         int lastMemberId = 3;
@@ -42,12 +43,12 @@ public class Main {
                 // 중복확인
                 while (true) {
                     System.out.print("로그인 아이디 : ");
-                     loginId = sc.nextLine().trim();
-                     if (isJoinableLoginId(loginId) == false) {
-                         System.out.println("이미 사용중인 아이디 입니다.");
-                         continue;
-                     }
-                     break;
+                    loginId = sc.nextLine().trim();
+                    if (isJoinableLoginId(loginId) == false) {
+                        System.out.println("이미 사용중인 아이디 입니다.");
+                        continue;
+                    }
+                    break;
                 }
                 String loginPw = null;
                 while (true) {
@@ -56,7 +57,7 @@ public class Main {
                     System.out.println("비밀번호 확인 : ");
                     String loginPwConfirm = sc.nextLine();
 
-                    if(loginPw.equals(loginPwConfirm) == false) {
+                    if (loginPw.equals(loginPwConfirm) == false) {
                         System.out.println("비밀번호를 다시 확인해주세요. : X");
                         continue;
                     }
@@ -71,6 +72,10 @@ public class Main {
 
                 System.out.println(id + "번 글이 생성되었습니다");
                 lastMemberId++;
+
+            } else if (cmd.equals("member login")) {
+
+            } else if (cmd.equals("member logout")) {
 
             } else if (cmd.equals("article write")) {
                 System.out.println("==게시글 작성==");
@@ -87,7 +92,7 @@ public class Main {
                 Article article = new Article(id, regDate, updateDate, title, body);
                 articles.add(article);
 
-                System.out.println(id + "번 글이 생성되었습니다");
+                System.out.println(id + "번 유저 회원가입이 성공되었습니다");
                 lastArticleId++;
 
             } else if (cmd.startsWith("article list")) {
@@ -201,15 +206,6 @@ public class Main {
         sc.close();
     }
 
-    private static boolean isJoinableLoginId(String loginId) {
-        for (Member member : members) {
-            if (member.getLoginId().equals(loginId)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private static Article getArticleById(int id) {
         // 위 for문과 같음. 더 간략화 될뿐.
         for (Article article : articles) {
@@ -220,12 +216,28 @@ public class Main {
         return null;
     }
 
-    private static void makeTestData() {
-        System.out.println("테스트 데이터 생성");
+    private static void articleMakeTestData() {
+        System.out.println("게시글 테스트 데이터 생성");
 
         articles.add(new Article(1, "2023-12-12-12 12:12:12", "2023-12-12-12 12:12:12", "제목1", "내용1"));
         articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2"));
         articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3"));
 
+    }
+
+    private static boolean isJoinableLoginId(String loginId) {
+        for (Member member : members) {
+            if (member.getLoginId().equals(loginId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static void memberMakeTestData() {
+        System.out.println("회원 테스트 데이터 생성");
+        members.add(new Member(1, Util.getNow(), "KGB", "test1", "강기범"));
+        members.add(new Member(2, Util.getNow(), "SSS", "test2", "신여사"));
+        members.add(new Member(3, Util.getNow(), "KDM", "test3", "강주임"));
     }
 }
