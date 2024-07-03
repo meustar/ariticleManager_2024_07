@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Main {
 
     static List<Article> articles = new ArrayList<>();
+    static List<Member> members = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -18,6 +19,7 @@ public class Main {
         makeTestData();
 
         int lastArticleId = 3;
+        int lastMemberId = 3;
 
         while (true) {
             System.out.print("명령어) ");
@@ -31,8 +33,46 @@ public class Main {
                 SystemController.exit();
                 break;
             }
+            if (cmd.equals("member join")) {
+                System.out.println("==회원가입==");
+                int id = lastMemberId + 1;
+                String regDate = Util.getNow();
+                String loginId = null;
 
-            if (cmd.equals("article write")) {
+                // 중복확인
+                while (true) {
+                    System.out.print("로그인 아이디 : ");
+                     loginId = sc.nextLine().trim();
+                     if (isJoinableLoginId(loginId) == false) {
+                         System.out.println("이미 사용중인 아이디 입니다.");
+                         continue;
+                     }
+                     break;
+                }
+                String loginPw = null;
+                while (true) {
+                    System.out.print("비밀번호 : ");
+                    loginPw = sc.nextLine();
+                    System.out.println("비밀번호 확인 : ");
+                    String loginPwConfirm = sc.nextLine();
+
+                    if(loginPw.equals(loginPwConfirm) == false) {
+                        System.out.println("비밀번호를 다시 확인해주세요. : X");
+                        continue;
+                    }
+                    break;
+                }
+
+                System.out.print("이름 : ");
+                String name = sc.nextLine();
+
+                Member member = new Member(id, regDate, loginId, loginPw, name);
+                members.add(member);
+
+                System.out.println(id + "번 글이 생성되었습니다");
+                lastMemberId++;
+
+            } else if (cmd.equals("article write")) {
                 System.out.println("==게시글 작성==");
                 int id = lastArticleId + 1;
                 // 작성 날자
@@ -161,13 +201,16 @@ public class Main {
         sc.close();
     }
 
+    private static boolean isJoinableLoginId(String loginId) {
+        for (Member member : members) {
+            if (member.getLoginId().equals(loginId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static Article getArticleById(int id) {
-//        for (int i = 0; i < articles.size(); i++) {
-//            Article article = articles.get(i);
-//            if (article.getId() == id) {
-//                return article;
-//            }
-//        }
         // 위 for문과 같음. 더 간략화 될뿐.
         for (Article article : articles) {
             if (article.getId() == id) {
