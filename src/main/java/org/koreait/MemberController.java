@@ -38,7 +38,7 @@ public class MemberController {
         while (true) {
             System.out.print("비밀번호 : ");
             loginPw = sc.nextLine();
-            System.out.println("비밀번호 확인 : ");
+            System.out.print("비밀번호 확인 : ");
             String loginPwConfirm = sc.nextLine();
 
             if (loginPw.equals(loginPwConfirm) == false) {
@@ -54,7 +54,7 @@ public class MemberController {
         Member member = new Member(id, regDate, loginId, loginPw, name);
         members.add(member);
 
-        System.out.println(id + "번 글이 생성되었습니다");
+        System.out.println(id + "번 유저가 생성되었습니다");
         lastMemberId++;
     }
 

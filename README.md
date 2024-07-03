@@ -509,3 +509,13 @@ public class Main {
 2. 회원 테스트데이터 3명 생성
 3. 로그인 --> member login
 4. 로그아웃 --> member logout
+
+
+#### 2. 교시
+
+#### 3. 교시
+
+#### 4. 교시
+ArticleController 도입.
+- do = 저장소(db)에 직접적인 데이터 입력이 이루어질 경우
+- show = 데이터 변경 없이 가져와서 보여줄 경우
