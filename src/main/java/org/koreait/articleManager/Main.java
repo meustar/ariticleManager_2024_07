@@ -1,4 +1,4 @@
-package org.koreait;
+package org.koreait.articleManager;
 
 public class Main {
 

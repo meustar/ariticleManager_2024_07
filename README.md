@@ -519,3 +519,6 @@ public class Main {
 ArticleController 도입.
 - do = 저장소(db)에 직접적인 데이터 입력이 이루어질 경우
 - show = 데이터 변경 없이 가져와서 보여줄 경우
+#### 5. 교시
+
+- 부모 클래스의 doAction은 빈 깡통이지만. 리모콘을 잃어버리지 않으려면 꼭 필요하다.

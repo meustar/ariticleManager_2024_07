@@ -1,12 +1,16 @@
-package org.koreait;
+package org.koreait.controller;
+
+import org.koreait.dto.Article;
+import org.koreait.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArticleController {
-    Scanner sc;
-    List<Article> articles;
+public class ArticleController extends Controller {
+    private Scanner sc;
+    private List<Article> articles;
+    private String cmd;
 
     private int lastArticleId = 3;
 
@@ -16,8 +20,33 @@ public class ArticleController {
         articles = new ArrayList<>();
     }
 
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
 
-    public void doWrite() {
+        switch (actionMethodName) {
+            case "write":
+                doWrite();
+                break;
+            case "list":
+                showList();
+                break;
+            case "detail":
+                showDetail();
+                break;
+            case "modify":
+                doModify();
+                break;
+            case "delete":
+                doDelete();
+                break;
+            default:
+                System.out.println("명령어 확인 (actionMethodName) 오류");
+                break;
+        }
+    }
+
+
+    private void doWrite() {
 
         System.out.println("==게시글 작성==");
         int id = lastArticleId + 1;
@@ -33,12 +62,12 @@ public class ArticleController {
         Article article = new Article(id, regDate, updateDate, title, body);
         articles.add(article);
 
-        System.out.println(id + "번 유저 회원가입이 성공되었습니다");
+        System.out.println(id + "번 글이 생성되었습니다");
         lastArticleId++;
     }
 
 
-    public void showList(String cmd) {
+    private void showList() {
         System.out.println("==게시글 보기==");
         if (articles.size() == 0) {
             System.out.println("아무것도 없어");
@@ -87,7 +116,7 @@ public class ArticleController {
 
     }
 
-    public void showDetail(String cmd) {
+    private void showDetail() {
         System.out.println("==게시글 상세보기==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -107,7 +136,7 @@ public class ArticleController {
     }
 
 
-    public void doDelete(String cmd) {
+    private void doDelete() {
         System.out.println("==게시글 삭제==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -123,7 +152,7 @@ public class ArticleController {
         System.out.println(foundArticle.getId() + "번 게시글이 삭제되었습니다");
     }
 
-    public void doModify(String cmd) {
+    private void doModify() {
         System.out.println("==게시글 수정==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
