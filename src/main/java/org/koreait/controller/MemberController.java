@@ -12,6 +12,7 @@ public class MemberController extends Controller {
     private Scanner sc;
     private List<Member> members;
     private String cmd;
+    private Member loginedMember = null;
 
     private int lastMemberId = 3;
 
@@ -29,10 +30,70 @@ public class MemberController extends Controller {
             case "join":
                 doJoin();
                 break;
+            case "login":
+                doLogin();      // 내가 누구인지 알려주는 행위.
+            case "logout":
+                doLogout();     // 내가 누군지 몰라도 돼~
             default:
                 System.out.println("명령어 확인 (actionMethodName) 오류");
                 break;
         }
+    }
+
+    private boolean isLogined() {
+        return loginedMember != null;
+    }
+
+    private void doLogout() {
+        if (!isLogined()) {
+            System.out.println("이미 로그아웃 상태입니다.");
+            return;
+        }
+        loginedMember = null;
+
+        System.out.println("로그아웃 되었습니다.");
+    }
+
+    private void doLogin() {
+        if (isLogined()) {
+            System.out.println("이미 로그인 중입니다.");
+            return;
+        }
+        System.out.println("==로그인==");
+
+        System.out.print("로그인 아이디 : ");
+        String loginId = sc.nextLine().trim();
+        System.out.print("비밀번호 : ");
+        String loginPw = sc.nextLine();
+
+        // 얘 내 회원인가? -> 사용자가 방금 입력한 로그인 아이디랑 일치하는 회원이 나한태 있나?
+
+        Member member = getMemberByLoginId(loginId);
+
+        if (member == null) {
+            System.out.println("일치하는 회원이 없습니다.");
+            return;
+        }
+
+        // 있는놈이다. // 내가 알고있는 이놈의 비번이 지금 얘가 입력한거랑 일치한가?
+
+
+        if (member.getLoginPw().equals(loginPw) == false) {
+            System.out.println("비밀번호가 틀렸습니다.");
+            return;
+        }
+        loginedMember = member;     // 핵심. 누가 로그인 했는지 알고있음.
+
+        System.out.printf("%s님 로그인 성공\n", member.getName());
+    }
+
+    private Member getMemberByLoginId(String loginId) {
+        for (Member member : members) {
+            if (member.getLoginId().equals(loginId)) {
+                return member;
+            }
+        }
+        return null;
     }
 
     private void doJoin() {
