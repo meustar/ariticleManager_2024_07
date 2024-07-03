@@ -17,22 +17,6 @@ public class Main {
 
         makeTestData();
 
-        System.out.println("1. 로그인");
-        System.out.println("2. 회원가입");
-
-        if (sc.nextLine() == "1") {
-            System.out.println("===== 로그인 ======");
-            System.out.print("ID : ");
-
-            System.out.print("PW : ");
-        } else if (sc.nextLine() == "2") {
-            System.out.println("====== 회원가입 ======");
-            System.out.print("ID : ");
-            System.out.print("PW : ");
-        }
-
-
-
         int lastArticleId = 3;
 
         while (true) {
@@ -66,35 +50,51 @@ public class Main {
                 System.out.println(id + "번 글이 생성되었습니다");
                 lastArticleId++;
 
-            } else if (cmd.equals("article list")) {
-                System.out.println("==전체 글 보기==");
+            } else if (cmd.startsWith("article list")) {
+                System.out.println("==게시글 보기==");
                 if (articles.size() == 0) {
                     System.out.println("아무것도 없어");
-                } else {
-                    System.out.println("  번호   /    날짜   /   제목   /   내용   ");
+                    continue;
+                }
 
-                    // 리스트 목록을 역순으로 가져와야 함.
-                    for (int i = articles.size() - 1; i >= 0; i--) {
-                        Article article = articles.get(i);
+                String searchKeyword = cmd.substring("article list ".length()).trim();
 
-                        // 날자를 " " 공백기준으로 자를때, [0]은 년월일, [1]은 시분초
-                        // 날자[0]과 현재 날자를 비교했을 때, 같은 날자이면, [1]의 시분초만 출력
-                        // 다른 날자이면 [0] 년월일만 출력
-                        if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
-                            System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
-                        } else {
-                            System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
-                        }
+                List<Article> forPrintArticles = articles;
+
+                for (Article article : articles) {
+                    if (article.getTitle().contains(searchKeyword)) {
+                        forPrintArticles.add(article);
+
+                    }
+                    if (forPrintArticles.size() == 0) {
+                        System.out.println("  번호   /    날짜   /   제목   /   내용   ");
+                        System.out.println("검색 결과 없음");
+                        continue;
                     }
                 }
-            } else if (cmd.equals("article list 제")) {
-                System.out.println("==선택 글 보기==");
-                for (int i = articles.size() - 1; i >= 0; i--) {
-                    Article article = articles.get(i);
-                    if (article.getTitle().startsWith("제") == true) {
-                        System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate(), article.getTitle(), article.getBody());
+                System.out.println("  번호   /    날짜   /   제목   /   내용   ");
+                // 리스트 목록을 역순으로 가져와야 함.
+                for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+                    Article article = forPrintArticles.get(i);
+
+                    // 날자를 " " 공백기준으로 자를때, [0]은 년월일, [1]은 시분초
+                    // 날자[0]과 현재 날자를 비교했을 때, 같은 날자이면, [1]의 시분초만 출력
+                    // 다른 날자이면 [0] 년월일만 출력
+                    if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
+                        System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
+                    } else {
+                        System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
                     }
                 }
+
+//            } else if (cmd.equals("article list 제")) {
+//                System.out.println("==선택 글 보기==");
+//                for (int i = articles.size() - 1; i >= 0; i--) {
+//                    Article article = articles.get(i);
+//                    if (article.getTitle().startsWith("제") == true) {
+//                        System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate(), article.getTitle(), article.getBody());
+//                    }
+//                }
 
             } else if (cmd.startsWith("article detail")) {
                 System.out.println("==게시글 상세보기==");
@@ -152,7 +152,7 @@ public class Main {
                 foundArticle.setUpdateDate(Util.getNow());
 
                 System.out.println(foundArticle.getId() + "번 게시글이  수정되었습니다");
-            }else {
+            } else {
                 System.out.println("사용할 수 없는 명령어입니다");
             }
 
@@ -168,6 +168,7 @@ public class Main {
 //                return article;
 //            }
 //        }
+        // 위 for문과 같음. 더 간략화 될뿐.
         for (Article article : articles) {
             if (article.getId() == id) {
                 return article;

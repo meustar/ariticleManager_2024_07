@@ -1,4 +1,4 @@
-## 2024_07_02_ 18일차
+## 24_07_02 19일차
 #### 1 ~ 2교시
 - 구현하기
 
@@ -500,3 +500,12 @@ public class Main {
 
 4. 회원가입
    - Member(id, regDate, LoginId, LoginPw, name)
+
+
+## 24_07_03 20일차
+#### 1. 교시
+1. 회원가입
+   - Member(id, regDate, LoginId, LoginPw, name)
+2. 회원 테스트데이터 3명 생성
+3. 로그인
+4. 로그아웃
