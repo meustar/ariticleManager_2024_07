@@ -1,6 +1,8 @@
 package org.koreait.controller;
 
+import org.koreait.articleManager.Container;
 import org.koreait.dto.Article;
+import org.koreait.dto.Member;
 import org.koreait.util.Util;
 
 import java.util.ArrayList;
@@ -12,12 +14,15 @@ public class ArticleController extends Controller {
     private List<Article> articles;
     private String cmd;
 
+    List<Member> members = Container.memberDao.members;
+
     private int lastArticleId = 3;
 
     public ArticleController(Scanner sc) {
 
         this.sc = sc;
-        articles = new ArrayList<>();
+//        articles = new ArrayList<>();
+        articles = Container.articleDao.articles;       // 자바기초 42강 후반부.. .두번으로 넘겨넘겨 가는 방법
     }
 
     public void doAction(String cmd, String actionMethodName) {
@@ -95,18 +100,27 @@ public class ArticleController extends Controller {
                 return;
             }
         }
-        System.out.println("  번호   /    날짜    /  작성자  /   제목   /   내용   ");
+
+        String writerName = null;
+
+        System.out.println("  번호  /        날짜         /     작성자     /     제목      /   내용   ");
         // 리스트 목록을 역순으로 가져와야 함.
         for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
             Article article = forPrintArticles.get(i);
+            for (Member member : members) {
+                if(article.getMemberId() == member.getId()) {
+                    writerName = member.getName();
+                    break;
+                }
+            }
 
             // 날자를 " " 공백기준으로 자를때, [0]은 년월일, [1]은 시분초
             // 날자[0]과 현재 날자를 비교했을 때, 같은 날자이면, [1]의 시분초만 출력
             // 다른 날자이면 [0] 년월일만 출력
             if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
-                System.out.printf("  %d   /   %s     /     %d     /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[1], article.getMemberId(), article.getTitle(), article.getBody());
+                System.out.printf("    %d   /      %s       /     %s     /     %s     /   %s  \n", article.getId(), article.getRegDate().split(" ")[1], writerName, article.getTitle(), article.getBody());
             } else {
-                System.out.printf("  %d   /   %s     /     %d     /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[0], article.getMemberId(), article.getTitle(), article.getBody());
+                System.out.printf("    %d   /    %s    /     %s     /     %s     /   %s  \n", article.getId(), article.getRegDate().split(" ")[0], writerName, article.getTitle(), article.getBody());
             }
         }
 
