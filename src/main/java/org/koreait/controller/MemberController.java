@@ -27,48 +27,26 @@ public class MemberController extends Controller {
 
         switch (actionMethodName) {
             case "join":
-                if (isLogined()) {
-                    System.out.println("이미 로그인중");
-                    return;
-                }
                 doJoin();
                 break;
             case "login":
-                if (isLogined()) {
-                    System.out.println("이미 로그인중");
-                }
                 doLogin();      // 내가 누구인지 알려주는 행위.
+                break;
             case "logout":
-                if (!isLogined()) {
-                    System.out.println("이미 로그아웃 상태");
-                    return;
-                }
                 doLogout();     // 내가 누군지 몰라도 돼~
+                break;
             default:
                 System.out.println("명령어 확인 (actionMethodName) 오류");
                 break;
         }
     }
 
-    public boolean isLogined() {
-        return loginedMember != null;
-    }
-
     private void doLogout() {
-        if (!isLogined()) {
-            System.out.println("이미 로그아웃 상태입니다.");
-            return;
-        }
         loginedMember = null;
-
         System.out.println("로그아웃 되었습니다.");
     }
 
     private void doLogin() {
-        if (isLogined()) {
-            System.out.println("이미 로그인 중입니다.");
-            return;
-        }
         System.out.println("==로그인==");
 
         System.out.print("로그인 아이디 : ");
@@ -95,15 +73,6 @@ public class MemberController extends Controller {
         loginedMember = member;     // 핵심. 누가 로그인 했는지 알고있음.
 
         System.out.printf("%s님 로그인 성공\n", member.getName());
-    }
-
-    private Member getMemberByLoginId(String loginId) {
-        for (Member member : members) {
-            if (member.getLoginId().equals(loginId)) {
-                return member;
-            }
-        }
-        return null;
     }
 
     private void doJoin() {
@@ -142,7 +111,7 @@ public class MemberController extends Controller {
         Member member = new Member(id, regDate, loginId, loginPw, name);
         members.add(member);
 
-        System.out.println(id + "번 유저가 생성되었습니다");
+        System.out.println(id + "번 회원이 가입되었습니다");
         lastMemberId++;
     }
 
@@ -153,6 +122,15 @@ public class MemberController extends Controller {
             }
         }
         return true;
+    }
+
+    private Member getMemberByLoginId(String loginId) {
+        for (Member member : members) {
+            if (member.getLoginId().equals(loginId)) {
+                return member;
+            }
+        }
+        return null;
     }
 
     public void makeTestData() {

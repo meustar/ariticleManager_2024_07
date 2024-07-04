@@ -5,6 +5,14 @@ public class Member extends Dto {
     private String loginPw;
     private String name;
 
+    public Member (int id, String regDate, String loginId, String loginPw, String name) {
+        this.id = id;
+        this.regDate = regDate;
+        this.loginId = loginId;
+        this.loginPw = loginPw;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
@@ -42,14 +50,6 @@ public class Member extends Dto {
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public Member (int id, String regDate, String loginId, String loginPw, String name) {
-        this.id = id;
-        this.regDate = regDate;
-        this.loginId = loginId;
-        this.loginPw = loginPw;
         this.name = name;
     }
 }
