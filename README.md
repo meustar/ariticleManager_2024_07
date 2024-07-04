@@ -524,7 +524,8 @@ ArticleController 도입.
 - App 클래스의 간소화, 패키징, 상속, 추상
 #### 6. 교시
 - 로그인, 로그아웃 구현.
-- ```java
+
+```java
 public void doAction(String cmd, String actionMethodName) {
 this.cmd = cmd;
 
@@ -593,3 +594,8 @@ this.cmd = cmd;
 #### 7. 교시
 - 글쓰기 (article write)가 로그인 상태에서만 가능하도록
 - 작성자만 수정/ 삭제 가능하도록
+
+
+## 2024_07_04 21일차
+#### 1교시.
+#### 2교시.

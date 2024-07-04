@@ -1,6 +1,10 @@
 package org.koreait.controller;
 
+import org.koreait.dto.Member;
+
 public abstract class Controller {
+
+    protected static Member loginedMember = null;
 
     //    public abstract
     public abstract void doAction(String cmd, String actionMethodName);
@@ -10,5 +14,10 @@ public abstract class Controller {
 
 
     // 마지막 7교시 힌트....
-//    public abstract void isLogined();
+    public boolean isLogined(){
+        return loginedMember != null;
+    }
+    public void makeTestData() {
+
+    }
 }

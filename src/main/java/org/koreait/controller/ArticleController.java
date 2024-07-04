@@ -11,6 +11,7 @@ public class ArticleController extends Controller {
     private Scanner sc;
     private List<Article> articles;
     private String cmd;
+    private Article loginedArticle = null;
 
     private int lastArticleId = 3;
 
@@ -25,6 +26,10 @@ public class ArticleController extends Controller {
 
         switch (actionMethodName) {
             case "write":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doWrite();
                 break;
             case "list":
@@ -34,9 +39,17 @@ public class ArticleController extends Controller {
                 showDetail();
                 break;
             case "modify":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doModify();
                 break;
             case "delete":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doDelete();
                 break;
             default:
@@ -199,4 +212,10 @@ public class ArticleController extends Controller {
         articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2"));
         articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3"));
     }
+
+    public boolean isLogined() {
+        return loginedMember != null;
+    }
+
+
 }
